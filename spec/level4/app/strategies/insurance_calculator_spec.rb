@@ -3,6 +3,7 @@ require 'date'
 require_relative '../../../../level4/app/strategies/insurance_calculator'
 require_relative '../../../../level4/app/models/rental'
 require_relative '../../../../level4/app/models/car'
+require_relative '../../../../level4/app/models/action'
 
 RSpec.describe InsuranceCalculator do
   describe '#calculate' do
@@ -27,10 +28,16 @@ RSpec.describe InsuranceCalculator do
     let(:insurance_calculator) { InsuranceCalculator.new(rental) }
 
     it 'calculates the insurance amount correctly' do
-      total_fee = rental.price * 0.3
+      total_fee = 7500 * 0.3
       insurance_fee = total_fee / 2
 
-      expect(insurance_calculator.calculate_amount).to eq(insurance_fee) # Half of the commission
+      driver_action = Action.new(
+        who: 'driver',
+        type: 'debit',
+        amount: 7500
+      )
+
+      expect(insurance_calculator.calculate_amount({ driver: driver_action})).to eq(insurance_fee) # Half of the commission
     end
 
     it 'returns correct who and type' do

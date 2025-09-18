@@ -1,9 +1,9 @@
 require 'json'
 require_relative '../factories/car_factory'
 require_relative '../factories/rental_factory'
-require_relative '../adapters/rental_output_adapter'
+require_relative '../serializers/computed_rental_serializer'
 
-class RentalPriceCalculator
+class RentalsComputation
   def initialize(input_file_path, output_file_path)
     @input_file_path = input_file_path
     @output_file_path = output_file_path
@@ -17,11 +17,14 @@ class RentalPriceCalculator
     car_getter = ->(id) { cars.find { |car| car.id == id } }
     rentals = input_data['rentals'].map { |rental_data| RentalFactory.create(rental_data, car_getter) }
 
-    output_rentals = rentals.map { |rental| RentalResponseBuilder.new(rental).adapt }
+    computed_rentals = rentals.map(&:compute)
+
+    serialized_rentals = computed_rentals
+                           .map { |computed_rental| ComputedRentalSerializer.new(computed_rental).serialize }
 
     File.write(
       @output_file_path,
-      JSON.pretty_generate({ rentals: output_rentals })
+      JSON.pretty_generate({ rentals: serialized_rentals })
     )
   end
 end

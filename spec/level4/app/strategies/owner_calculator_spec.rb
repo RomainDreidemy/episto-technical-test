@@ -27,10 +27,16 @@ RSpec.describe OwnerCalculator do
     let(:owner_calculator) { OwnerCalculator.new(rental) }
 
     it 'calculates the owner amount correctly' do
-      total_fee = rental.price * 0.3
-      owner_amount = rental.price - total_fee
+      total_fee = 7500 * 0.3
+      owner_amount = 7500 - total_fee
 
-      expect(owner_calculator.calculate_amount).to eq(owner_amount) # Owner gets the rental price minus the commission
+      driver_action = Action.new(
+        who: 'driver',
+        type: 'debit',
+        amount: 7500
+      )
+
+      expect(owner_calculator.calculate_amount({ driver: driver_action })).to eq(owner_amount) # Owner gets the rental price minus the commission
     end
 
     it 'returns correct who and type' do

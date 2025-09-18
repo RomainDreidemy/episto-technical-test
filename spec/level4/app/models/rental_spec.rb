@@ -31,9 +31,5 @@ RSpec.describe Rental do
       expect(rental.end_date).to eq(Date.parse('2023-01-03'))
       expect(rental.distance).to eq(150)
     end
-
-    it 'prices the rental correctly' do
-      expect(rental.price).to eq(2000 + 2000 * 2 * 0.9 + 10 * 150) # 3 days (2 at -10%), 150 km
-    end
   end
 end

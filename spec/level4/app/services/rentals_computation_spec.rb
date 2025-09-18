@@ -4,11 +4,11 @@ require_relative '../../../../level4/app/factories/rental_factory'
 require_relative '../../../../level4/app/models/rental'
 require_relative '../../../../level4/app/models/car'
 require_relative '../../../../level4/app/factories/car_factory'
-require_relative '../../../../level4/app/services/rental_price_calculator'
+require_relative '../../../../level4/app/services/rentals_computation'
 
-RSpec.describe RentalPriceCalculator do
+RSpec.describe RentalsComputation do
   it 'calculates the rental price correctly' do
-    calculator = RentalPriceCalculator.new('./level4/data/input.json', 'spec/level4/data/output.json')
+    calculator = RentalsComputation.new('./level4/data/input.json', 'spec/level4/data/output.json')
     calculator.calculate
 
     output = JSON.parse(File.read('./spec/level4/data/output.json'))

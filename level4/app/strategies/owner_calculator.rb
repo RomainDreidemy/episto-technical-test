@@ -10,7 +10,11 @@ class OwnerCalculator < ActionCalculatorStrategy
     'credit'
   end
 
-  def calculate_amount(_ = nil)
-   (@rental.price * CommissionConfig.instance.owner_fee_rate).to_i
+  def calculate_amount(dependency_actions = {}, _ = nil)
+    driver_action = dependency_actions[:driver]
+
+    raise 'Driver action is required to calculate owner amount' unless driver_action
+
+   (driver_action.amount * CommissionConfig.instance.owner_fee_rate).to_i
   end
 end

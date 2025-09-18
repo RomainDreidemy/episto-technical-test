@@ -1,5 +1,6 @@
 require_relative '../services/daily_cost_calculator'
 require_relative '../helpers/days_between_dates'
+require_relative '../services/rental_computation'
 
 class Rental
   include DaysBetweenDates
@@ -14,21 +15,8 @@ class Rental
     @distance = distance
   end
 
-  def price
-    daily_cost + distance_cost
-  end
-
-  private
-
-  def daily_cost
-    DailyCostCalculator.new(
-      start_date,
-      end_date,
-      car.price_per_day
-    ).calculate
-  end
-
-  def distance_cost
-    car.price_per_km * distance
+  # @return [ComputedRental]
+  def compute
+    RentalComputation.new(self).compute
   end
 end

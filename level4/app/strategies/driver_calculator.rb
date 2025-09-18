@@ -10,6 +10,14 @@ class DriverCalculator < ActionCalculatorStrategy
   end
 
   def calculate_amount(_ = nil)
-    @rental.price # The driver pays the total rental price
+    daily_cost = DailyCostCalculator.new(
+      @rental.start_date,
+      @rental.end_date,
+      @rental.car.price_per_day
+    ).calculate
+
+    distance_cost = @rental.car.price_per_km * @rental.distance
+
+    (daily_cost + distance_cost).to_i
   end
 end

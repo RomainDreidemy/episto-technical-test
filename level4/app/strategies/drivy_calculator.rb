@@ -10,10 +10,14 @@ class DrivyCalculator < ActionCalculatorStrategy
     'credit'
   end
 
-  def calculate_amount(dependencies = {})
-    total_commission = @rental.price * CommissionConfig.instance.commission_rate
-    insurance_amount = dependencies[:insurance]&.dig(:amount) || 0
-    assistance_amount = dependencies[:assistance]&.dig(:amount) || 0
+  def calculate_amount(dependencies = {}, _ = nil)
+    driver_action = dependencies[:driver]
+
+    raise 'Driver action is required to calculate drivy amount' unless driver_action
+
+    total_commission = driver_action.amount * CommissionConfig.instance.commission_rate
+    insurance_amount = dependencies[:insurance]&.amount || 0
+    assistance_amount = dependencies[:assistance]&.amount || 0
 
     (total_commission - insurance_amount - assistance_amount).to_i
   end

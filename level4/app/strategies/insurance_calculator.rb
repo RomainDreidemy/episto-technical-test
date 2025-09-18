@@ -10,11 +10,14 @@ class InsuranceCalculator < ActionCalculatorStrategy
     'credit'
   end
 
-  def calculate_amount(_ = nil)
+  def calculate_amount(dependency_actions = {}, _ = nil)
     commission_config = CommissionConfig.instance
+    driver_action = dependency_actions[:driver]
+
+    raise 'Driver action is required to calculate insurance amount' unless driver_action
 
     (
-      @rental.price *
+      driver_action.amount *
         commission_config.commission_rate *
         commission_config.insurance_fee_rate
     ).to_i
