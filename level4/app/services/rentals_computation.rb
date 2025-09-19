@@ -20,7 +20,7 @@ class RentalsComputation
     computed_rentals = rentals.map(&:compute)
 
     serialized_rentals = computed_rentals
-                           .map { |computed_rental| ComputedRentalSerializer.new(computed_rental).serialize }
+                           .map { |computed_rental| RentalSerializer.new(computed_rental).serialize }
 
     File.write(
       @output_file_path,

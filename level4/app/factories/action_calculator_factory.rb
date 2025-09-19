@@ -4,7 +4,7 @@ require_relative '../strategies/insurance_calculator'
 require_relative '../strategies/assistance_calculator'
 require_relative '../strategies/drivy_calculator'
 
-class ActionCalculatorFactory
+class ActionFactory
   CALCULATORS = {
     'driver' => DriverCalculator,
     'owner' => OwnerCalculator,

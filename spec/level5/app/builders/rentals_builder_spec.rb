@@ -25,7 +25,7 @@ RSpec.describe RentalsBuilder do
 
     it 'builds rentals with associated cars and options correctly' do
       rentals_builder = RentalsBuilder.new(input_data)
-      rentals = rentals_builder.build_rentals
+      rentals = rentals_builder.build_rentals_from_input_file
 
       expect(rentals.length).to eq(2)
 

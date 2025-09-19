@@ -7,7 +7,7 @@ class RentalsBuilder
     @input_data = input_data
   end
 
-  def build_rentals
+  def build_rentals_from_input_file
     cars = @input_data['cars'].map { |car_data| CarFactory.create(car_data) }
     options = @input_data['options'].map { |option_data| OptionFactory.create(option_data) }
 

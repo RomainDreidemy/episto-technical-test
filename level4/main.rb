@@ -1,5 +1,5 @@
-require_relative 'app/services/rental_price_calculator'
+require_relative 'app/services/rentals_computation'
 
-RentalPriceCalculator
+RentalsComputation
   .new('./data/input.json', './data/output.json')
   .calculate

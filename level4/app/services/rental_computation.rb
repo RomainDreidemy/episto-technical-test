@@ -12,8 +12,8 @@ class RentalComputation
     actions = {}
 
     %w[driver owner insurance assistance drivy].each do |who|
-      actions[who.to_sym] = ActionCalculatorFactory.create(who, @rental)
-                                                   .calculate(actions)
+      actions[who.to_sym] = ActionFactory.create(who, @rental)
+                                         .calculate(actions)
     end
 
     ComputedRental.new(@rental, actions.values)

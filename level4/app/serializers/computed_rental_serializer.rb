@@ -1,4 +1,4 @@
-class ComputedRentalSerializer
+class RentalSerializer
   def initialize(computed_rental)
     @computed_rental = computed_rental
   end

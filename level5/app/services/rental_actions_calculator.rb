@@ -1,4 +1,4 @@
-require_relative '../factories/action_calculator_factory'
+require_relative '../factories/action_factory'
 
 class RentalActionsCalculator
   # The orders of the actors is important
@@ -10,11 +10,12 @@ class RentalActionsCalculator
     @rental = rental
   end
 
-  def calculate(options = {})
-    ACTORS.reduce({}) do |actions, who|
-      actions[who.to_sym] = ActionCalculatorFactory.create(who, @rental)
-                                                   .calculate(actions, options)
-      actions
+  def calculate
+    ACTORS.each do |who|
+      action = ActionFactory.create(who, @rental)
+      action.calculate
+
+      @rental.add_action(action)
     end
   end
 end

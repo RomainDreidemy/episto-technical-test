@@ -4,7 +4,6 @@ class Action
   def initialize(who:, type:, amount:)
     @who = who
     @type = type
-    @amount_without_options = amount_without_options
     @amount = amount
   end
 
